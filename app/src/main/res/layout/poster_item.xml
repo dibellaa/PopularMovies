@@ -10,5 +10,6 @@
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:id="@+id/poster_image"
-        tools:src="@drawable/image_example"/>
+        tools:src="@drawable/image_example"
+        android:contentDescription="@string/movie_poster_image"/>
 </FrameLayout>
