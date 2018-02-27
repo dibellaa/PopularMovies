@@ -1,8 +1,14 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
+
+import com.example.android.popularmovies.util.NetworkUtils;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by adibella on 26/02/2018.
@@ -119,5 +125,24 @@ public class Movie implements Parcelable{
             parcel.writeDouble(voteAverage);
         }
         parcel.writeString(releaseDate);
+    }
+
+    public void displayPoster(final Context context, ImageView imageView) {
+        Uri imageToDisplay = this.pathPoster;
+        Picasso.with(context)
+                .load(imageToDisplay)
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.image_error)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        NetworkUtils.checkConnection(context);
+                    }
+                });
     }
 }

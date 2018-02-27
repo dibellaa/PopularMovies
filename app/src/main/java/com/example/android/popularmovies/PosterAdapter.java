@@ -38,22 +38,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterAdap
     public void onBindViewHolder(PosterAdapter.PosterAdapterViewHolder holder, int position) {
         final Context context = holder.mPosterImageView.getContext();
         Movie movie = mMovies[position];
-        Uri imageToDisplay = movie.getPathPoster();
-        Picasso.with(context)
-                .load(imageToDisplay)
-                .placeholder(R.drawable.progress_animation)
-                .error(R.drawable.image_error)
-                .into(holder.mPosterImageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-
-                    @Override
-                    public void onError() {
-                        NetworkUtils.checkConnection(context);
-                    }
-                });
+        movie.displayPoster(context, holder.mPosterImageView);
     }
 
     @Override
