@@ -22,13 +22,24 @@ import java.util.Scanner;
 
 public class NetworkUtils {
     private final static String TAG = NetworkUtils.class.getSimpleName();
-    public final static String MOVIEDB_BASE_URL =
+    private final static String MOVIEDB_BASE_URL =
             "https://api.themoviedb.org/3/movie";
-    public final static String MOVIEDB_POSTER_BASE_URL =
+    private final static String MOVIEDB_POSTER_BASE_URL =
             "http://image.tmdb.org/t/p/w185";
-    final static String API_KEY_PARAM = "api_key";
-    final static String API_KEY_VALUE = "insert_api_key_here";
+    private final static String MOVIEDB_VIDEOS_PATH = "videos";
+    private final static String API_KEY_PARAM = "api_key";
+    private final static String API_KEY_VALUE = "insert_api_key_here";
+    private static final String MOVIEDB_REVIEWS_PATH = "reviews";
     private static Toast mToast;
+    private final static String YOUTUBE_THUMB_URL =
+            "https://img.youtube.com/vi";
+    private final static String YOUTUBE_THUMB_IMAGE_PATH = "0.jpg";
+    private final static String YOUTUBE_APP_URL =
+            "vnd.youtube:";
+    private final static String YOUTUBE_BROWSER_URL =
+            "http://www.youtube.com/watch";
+    private final static String YOUTUBE_VIDEO_KEY = "v";
+
 
     public static URL buildUrl(String sortOrder) {
         Uri builtUri = Uri.parse(MOVIEDB_BASE_URL).buildUpon()
@@ -41,12 +52,12 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.v(TAG, "Built URI " + url);
+//        Log.v(TAG, "Built URI " + url);
         return url;
     }
 
     public static Uri buildPosterUrl(String path) {
-        Log.v(TAG, "String path: " + path);
+//        Log.v(TAG, "String path: " + path);
         Uri posterUri = Uri.parse(MOVIEDB_POSTER_BASE_URL).buildUpon()
                 .appendEncodedPath(path).build();
         URL url = null;
@@ -55,7 +66,72 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.v(TAG, "Poster URI " + url);
+//        Log.v(TAG, "Poster URI " + url);
+        return Uri.parse(url.toString());
+    }
+
+    public static URL buildVideosUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIEDB_BASE_URL).buildUpon()
+                .appendPath(movieId)
+                .appendPath(MOVIEDB_VIDEOS_PATH)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY_VALUE)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+//        Log.v(TAG, "Built URI " + url);
+        return url;
+    }
+
+    public static URL buildReviewsUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIEDB_BASE_URL).buildUpon()
+                .appendPath(movieId)
+                .appendPath(MOVIEDB_REVIEWS_PATH)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY_VALUE)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+//        Log.v(TAG, "Built URI " + url);
+        return url;
+    }
+
+    public static Uri buildYouTubeThumbUrl(String path) {
+        Uri thumbUri = Uri.parse(YOUTUBE_THUMB_URL).buildUpon()
+                .appendPath(path)
+                .appendPath(YOUTUBE_THUMB_IMAGE_PATH)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(thumbUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return Uri.parse(url.toString());
+    }
+
+    public static Uri buildYouTubeAppUrl(String path) {
+        return Uri.parse(YOUTUBE_APP_URL).buildUpon()
+                .appendPath(path)
+                .build();
+    }
+
+    public static Uri buildYouTubeBrowserUrl(String key) {
+        Uri youTubeBrowserUri = Uri.parse(YOUTUBE_BROWSER_URL).buildUpon()
+                .appendQueryParameter(YOUTUBE_VIDEO_KEY, key)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(youTubeBrowserUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return Uri.parse(url.toString());
     }
 

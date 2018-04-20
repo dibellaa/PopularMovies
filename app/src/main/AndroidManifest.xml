@@ -30,6 +30,12 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".SettingsActivity"></activity>
+
+        <provider
+            android:authorities="@string/content_authority"
+            android:name=".data.FavoriteMoviesProvider"
+            android:exported="true"
+            android:enabled="true"/>
     </application>
 
 </manifest>

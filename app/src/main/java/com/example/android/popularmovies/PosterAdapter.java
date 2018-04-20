@@ -12,13 +12,15 @@ import com.example.android.popularmovies.util.NetworkUtils;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 
 /**
  * Created by adibella on 22/02/2018.
  */
 
 public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterAdapterViewHolder>{
-    private Movie[] mMovies;
+    private List<Movie> mMovies;
     private PosterAdapterOnClickHandler mClickHandler;
 
     public PosterAdapter(PosterAdapterOnClickHandler clickHandler) {
@@ -37,14 +39,14 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterAdap
     @Override
     public void onBindViewHolder(PosterAdapter.PosterAdapterViewHolder holder, int position) {
         final Context context = holder.mPosterImageView.getContext();
-        Movie movie = mMovies[position];
+        Movie movie = mMovies.get(position);
         movie.displayPoster(context, holder.mPosterImageView);
     }
 
     @Override
     public int getItemCount() {
         if (null == mMovies) return 0;
-        return mMovies.length;
+        return mMovies.size();
     }
 
     public class PosterAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -58,12 +60,12 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterAdap
         @Override
         public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
-            Movie movieSelected = mMovies[adapterPosition];
+            Movie movieSelected = mMovies.get(adapterPosition);
             mClickHandler.onClick(movieSelected);
         }
     }
 
-    public void setData(Movie[] movies) {
+    public void setData(List<Movie> movies) {
         mMovies = movies;
         notifyDataSetChanged();
     }

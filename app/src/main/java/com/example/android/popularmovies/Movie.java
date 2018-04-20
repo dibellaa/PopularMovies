@@ -15,8 +15,10 @@ import com.squareup.picasso.Picasso;
  */
 
 public class Movie implements Parcelable{
+    private int id;
     private String originalTitle;
     private Uri pathPoster;
+    private String stringPathPoster;
     private String overview;
     private Double voteAverage;
     private String releaseDate;
@@ -25,17 +27,21 @@ public class Movie implements Parcelable{
 
     }
 
-    public Movie(String originalTitle, Uri pathPoster, String overview, Double voteAverage, String releaseDate) {
+    public Movie(int id, String originalTitle, Uri pathPoster, String stringPathPoster, String overview, Double voteAverage, String releaseDate) {
+        this.id = id;
         this.originalTitle = originalTitle;
         this.pathPoster = pathPoster;
+        this.stringPathPoster = stringPathPoster;
         this.overview = overview;
         this.voteAverage = voteAverage;
         this.releaseDate = releaseDate;
     }
 
     protected Movie(Parcel in) {
+        id = in.readInt();
         originalTitle = in.readString();
         pathPoster = in.readParcelable(Uri.class.getClassLoader());
+        stringPathPoster = in.readString();
         overview = in.readString();
         if (in.readByte() == 0) {
             voteAverage = null;
@@ -43,6 +49,27 @@ public class Movie implements Parcelable{
             voteAverage = in.readDouble();
         }
         releaseDate = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(originalTitle);
+        dest.writeParcelable(pathPoster, flags);
+        dest.writeString(stringPathPoster);
+        dest.writeString(overview);
+        if (voteAverage == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(voteAverage);
+        }
+        dest.writeString(releaseDate);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -56,6 +83,14 @@ public class Movie implements Parcelable{
             return new Movie[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Uri getPathPoster() {
         return pathPoster;
@@ -97,34 +132,21 @@ public class Movie implements Parcelable{
         this.releaseDate = releaseDate;
     }
 
+    public String getStringPathPoster() {
+        return stringPathPoster;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
+                "id='" + id + '\'' +
                 "originalTitle='" + originalTitle + '\'' +
                 ", pathPoster=" + pathPoster +
+                ", stringPathPoster=" + stringPathPoster +
                 ", overview='" + overview + '\'' +
                 ", voteAverage=" + voteAverage +
                 ", releaseDate='" + releaseDate + '\'' +
                 '}';
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(originalTitle);
-        parcel.writeParcelable(pathPoster, i);
-        parcel.writeString(overview);
-        if (voteAverage == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(voteAverage);
-        }
-        parcel.writeString(releaseDate);
     }
 
     public void displayPoster(final Context context, ImageView imageView) {

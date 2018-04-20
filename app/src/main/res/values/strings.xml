@@ -14,4 +14,15 @@
     <string name="pref_popular_label">Most Popular</string>
     <string name="pref_top_rated_label">Highest Rated</string>
     <string name="pref_order_top_rated" translatable="false">top_rated</string>
+    <string name="default_value_false_cb">false</string>
+    <string name="cb_key">show_favorites</string>
+    <string name="cb_summary_off">Off</string>
+    <string name="cb_summary_on">On</string>
+    <string name="cb_title">Show Favorite Movies</string>
+    <string name="content_authority">com.example.android.popularmovies</string>
+    <string name="tv_trailer_label_text">Trailers:</string>
+    <string name="star_button_description">Star button for favorite movies</string>
+    <string name="error_message_trailer">Any trailer to show</string>
+    <string name="iv_trailer_item_description">Trailer image</string>
+    <string name="tv_review_label">Reviews</string>
 </resources>

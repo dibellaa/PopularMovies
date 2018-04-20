@@ -10,4 +10,11 @@
         android:key="@string/pref_order_key"
         android:title="@string/pref_order_label"/>
 
+    <CheckBoxPreference
+        android:defaultValue="@string/default_value_false_cb"
+        android:key="@string/cb_key"
+        android:summaryOff="@string/cb_summary_off"
+        android:summaryOn="@string/cb_summary_on"
+        android:title="@string/cb_title" />
+
 </PreferenceScreen>
